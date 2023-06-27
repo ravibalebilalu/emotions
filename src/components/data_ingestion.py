@@ -6,6 +6,9 @@ import pandas as pd
 import numpy as np
 from dataclasses import dataclass
 from sklearn.model_selection import train_test_split
+from src.components.data_transformation import DataTransformation,DataTransformationConfig
+from src.helper import save_object
+
 
 @dataclass
 class DataIngestionConfig:
@@ -46,6 +49,10 @@ if __name__ == "__main__":
     #data ingestion
     ingestion = DataIngestion()
     train_data,test_data = ingestion.initiate_data_ingestion()
+    #data transformation
+    datatransformation = DataTransformation()
+    train_arr,test_arr,_ = datatransformation.initiate_data_transformation(train_data,test_data)
+    print(train_arr.shape)
      
 
             
