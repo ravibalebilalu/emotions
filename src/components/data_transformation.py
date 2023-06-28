@@ -47,7 +47,7 @@ class DataTransformation:
             
             logging.info("Reading train and test data compleated")
 
-            logging.info("Obtaining preprocessing object")
+             
              
             target_column_name = "emotions"
             text_column_name = "text"
@@ -61,10 +61,12 @@ class DataTransformation:
             target_feature_test_df = test_df[target_column_name]
               
 
-            logging.info("Applying preprocessing object on train and test data")
+            logging.info("Text cleaning initiated")
             input_feature_train_df["text"] = input_feature_train_df['text'].apply(clean_text)
             input_feature_test_df["text"] = input_feature_test_df['text'].apply(clean_text)
+            logging.info("Text Cleaning compleated")
 
+            logging.info("Text transformation initiated")
             tf = TfidfVectorizer(max_features = 2500)
             tf.fit(input_feature_train_df["text"])
             vectorizer_obj = open(self.data_transformation_config.vectorizer_obj_file_path,"wb")
@@ -75,8 +77,9 @@ class DataTransformation:
 
             train_transformed_arr = tf.transform(input_feature_train_df['text']).toarray()
             test_transformed_arr = tf.transform(input_feature_test_df['text']).toarray()
+            logging.info("Text transformation compleated")
             
-             
+            logging.info("Label encoding for target column initialized")
             le = LabelEncoder()
             le.fit(target_feature_train_df)
             labelizer = open(self.data_transformation_config.labelizer_obj_file_path,"wb")
@@ -84,10 +87,11 @@ class DataTransformation:
             labelizer.close()
             target_train_arr = le.transform(target_feature_train_df)
             target_test_arr = le.transform(target_feature_test_df)
-             
+            logging.info("Label encoding for target column is compleated")
             
             train_arr = np.c_[train_transformed_arr,target_train_arr]
             test_arr = np.c_[test_transformed_arr,target_test_arr]
+            logging.info("train_arr and test_arr are ready")
                       
              
             return (

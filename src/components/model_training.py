@@ -26,13 +26,16 @@ class ModelTrainer:
 
     def initiate_model_trainer(self,train_arr,test_arr):
         try:
-            logging.info("Splitting trainig and testing data")
+            logging.info("Splitting trainig and testing data initiated")
             x_train,y_train,x_test,y_test = (
                 train_arr[:,:-1],
                 train_arr[:,-1],
                 test_arr[:,:-1],
                 test_arr[:,-1]
             )
+            logging.info("Splitting trainig and testing data compleated")
+
+            logging.info("Preparing to hyperparameter tunning")
             models = {
             "LogisticRegression" : LogisticRegression(),
             "RidgeClassifier" : RidgeClassifier(),

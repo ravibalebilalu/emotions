@@ -8,7 +8,7 @@ from dataclasses import dataclass
 from sklearn.model_selection import train_test_split
 from src.components.data_transformation import DataTransformation,DataTransformationConfig
 from src.helper import save_object
-
+from src.components.model_training import ModelTrainerConfig,ModelTrainer
 
 @dataclass
 class DataIngestionConfig:
@@ -26,6 +26,7 @@ class DataIngestion:
         
         try:
             df = pd.read_csv("/config/workspace/emotions/data/data.csv")
+            #df = or_df.sample(n = 1000,random_state = 42)
             logging.info("Read data as dataframe")
 
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path),exist_ok = True)
@@ -51,8 +52,11 @@ if __name__ == "__main__":
     train_data,test_data = ingestion.initiate_data_ingestion()
     #data transformation
     datatransformation = DataTransformation()
-    train_arr,test_arr,_ = datatransformation.initiate_data_transformation(train_data,test_data)
-    print(train_arr.shape)
+    train_arr,test_arr= datatransformation.initiate_data_transformation(train_data,test_data)
+    #model training
+    modeltrainer = ModelTrainer()
+    print("Accuracy Score and best model :",modeltrainer.initiate_model_trainer(train_arr, test_arr))
+    
      
 
             
