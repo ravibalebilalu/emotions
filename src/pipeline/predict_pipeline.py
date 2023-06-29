@@ -46,7 +46,7 @@ class CustomData:
 
 if __name__ == "__main__":
     predict_pipeline = PredictPipeline()
-    test_data =  "Tell me what your goals are and how I can help you get ther"
+    test_data =  input("enter text.....\n")
     result = predict_pipeline.predict(test_data)
     print(result[0])
     
