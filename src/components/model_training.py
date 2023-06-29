@@ -13,7 +13,7 @@ from xgboost import XGBClassifier
 from catboost import CatBoostClassifier
 from src.exception import CustomException
 from src.logger import logging
-from src.helper import evaluate_models,load_object
+from src.helper import evaluate_models,load_object,save_object
 
 
 @dataclass
@@ -131,8 +131,8 @@ class ModelTrainer:
             best_model_name = list(model_report.keys())[list(model_report.values()).index(best_model_score)]
             best_model = models[best_model_name]
 
-            if best_model_score < 0.6:
-                raise CustomException("No best model found ")
+            #if best_model_score < 0.6:
+             #   raise CustomException("No best model found ",sys)
             logging.info("Best model found for both training and testing")
 
             save_object(

@@ -4,6 +4,8 @@ import pandas as pd
 from src.exception import CustomException
 from src.helper import load_object
 from src.components.data_transformation import clean_text
+import warnings
+warnings.filterwarnings("ignore")
 
 class PredictPipeline:
     def __init__(self):
@@ -11,17 +13,19 @@ class PredictPipeline:
     def predict(self,features):
         try:
             model_path = os.path.join("artifacts","model.pkl")
-            label_path = os.path.join("artifacts","labesl.pkl")
+            label_path = os.path.join("artifacts","labels.pkl")
             vectorizer_path = os.path.join("artifacts","tfidfvectorizer.pkl")
             
             model = load_object(file_path = model_path)
             labelizer = load_object(file_path = label_path)
             vectorizer = load_object(file_path = vectorizer_path)
 
-            data = pd.DataFrame(features,columns = ["text"])
-            data['text'] = data["text"].apply(clean_text)
-            x = vectorizer.transform(data['text'])
+            #data = pd.DataFrame(features,columns = ["text"])
+            data = [clean_text(features)]
+            
+            x = vectorizer.transform(data)
             pred = model.predict(x)
+            pred = labelizer.inverse_transform([int(pred)])
             return pred
 
         except Exception as e:
@@ -42,6 +46,8 @@ class CustomData:
 
 if __name__ == "__main__":
     predict_pipeline = PredictPipeline()
-    test_data = input("Enter the test string.....\n")
+    test_data =  "Tell me what your goals are and how I can help you get ther"
     result = predict_pipeline.predict(test_data)
-    print(result)
+    print(result[0])
+    
+    

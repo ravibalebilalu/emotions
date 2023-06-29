@@ -25,8 +25,8 @@ class DataIngestion:
         logging.info("Entered the data ingestion method")
         
         try:
-            or_df = pd.read_csv("/config/workspace/emotions/data/data.csv")
-            df = or_df.sample(n = 1000,random_state = 42)
+            df = pd.read_csv("/config/workspace/emotions/data/data.csv")
+             
             logging.info("Read data as dataframe")
 
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path),exist_ok = True)

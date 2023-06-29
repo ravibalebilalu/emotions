@@ -67,7 +67,7 @@ class DataTransformation:
             logging.info("Text Cleaning compleated")
 
             logging.info("Text transformation initiated")
-            tf = TfidfVectorizer(max_features = 500)
+            tf = TfidfVectorizer(max_features = 2500)
             tf.fit(input_feature_train_df["text"])
             vectorizer_obj = open(self.data_transformation_config.vectorizer_obj_file_path,"wb")
             pickle.dump(tf,vectorizer_obj)
